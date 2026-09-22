@@ -1,3 +1,36 @@
 spring:
   application:
     name: threadify
+  profiles:
+    active: dev   # default kalau tidak diset lewat env var — ganti manual saat deploy prod
+  data:
+    redis:
+      repositories:
+        enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  web:
+    resources:
+      add-mappings: false
+    locale: id_ID
+  messages:
+    basename: locale/messages
+    encoding: UTF-8
+  flyway:
+    schemas: ${SCHEMA:flyway}
+    enabled: true
+
+server:
+  forward-headers-strategy: framework
+  port: 8080
+  servlet:
+    context-path: /api
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,metrics,info
